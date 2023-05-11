@@ -10,7 +10,7 @@ use Shakurov\Coinbase\Facades\Coinbase;
 use App\Models\Ecommerce\Cart as CartModel;
 use App\Models\Ecommerce\Checkout;
 
-class Cart extends Component
+class CartCopyV2 extends Component
 {
     public $quantity;
 

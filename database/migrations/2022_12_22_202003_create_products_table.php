@@ -15,11 +15,18 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('description')->nullable();
-            $table->string('price', 15)->nullable();
-            $table->string('sub_price', 15)->nullable();
-            $table->string('image')->nullable();
+            $table->string('product_id')->nullable();
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
+            $table->decimal('local_price_amount', 8, 2)->nullable();
+            $table->string('local_price_currency', 3)->nullable();
+            $table->string('logo_url')->nullable();
+            $table->string('brand_color')->nullable();
+            $table->boolean('coinbase_managed_merchant')->nullable();
+            $table->string('brand_logo_url')->nullable();
+            $table->string('organization_name')->nullable();
+            $table->string('pricing_type')->nullable();
+            $table->string('resource')->nullable();
             $table->timestamps();
         });
     }

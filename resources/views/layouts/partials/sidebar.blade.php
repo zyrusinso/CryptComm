@@ -110,7 +110,7 @@
                             </li> --}}
 
                             <li class="dropdown">
-                                <a class="nav-link menu-title link-nav {{routeActive('history.index')}}" href="{{ route('history.index') }}"><i data-feather="clock"></i><span>@lang('app.sidebar.history')</span></a>
+                                <a class="nav-link menu-title link-nav {{routeActive('order-history.index')}}" href="{{ route('order-history.index') }}"><i data-feather="clock"></i><span>@lang('app.sidebar.history')</span></a>
                             </li>
 
                             <li class="sidebar-main-title">

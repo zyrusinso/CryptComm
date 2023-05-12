@@ -22,7 +22,7 @@ class Cart extends Component
         $products = $this->getAllProducts();
 
         foreach($carts as $item){
-            $metadata += [Str::snake($products[$item['product_id']]['name']) => $item['quantity']];
+            $metadata = array_merge($metadata, [Str::snake($products[$item['product_id']]['name']) => $item['quantity']]);
         }
 
         $charge = Coinbase::createCharge([
@@ -79,6 +79,7 @@ class Cart extends Component
     {
         $currentCart = CartModel::where('id', $id)->first();
         $currentCart->update(['quantity' => $currentCart->quantity+1]);
+        $this->updateTotal();
     }
 
     public function quantityDown($id)
@@ -88,6 +89,8 @@ class Cart extends Component
         if($currentCart->quantity != 1){
             $currentCart->update(['quantity' => $currentCart->quantity-1]);
         }
+
+        $this->updateTotal();
     }
 
     public function getProduct($id)
@@ -125,17 +128,38 @@ class Cart extends Component
 
     public function initializeProducts() //Need to be test first before use in production
     {
+        $data = [];
+
         $products = $this->getAllProducts();
         $MyAllProducts = $this->getAllMyProducts();
-
         foreach($products as $item){
-            if($item->updated_at != $MyAllProducts[$item->id] || !array_key_exists($item->id, $MyAllProducts)){
-                Product::create($item);
+            $data = [
+                'product_id' => $item['id'],
+                'name' => $item['name'],
+                'description' => $item['description'],
+                'local_price_amount' => $item['local_price']['amount'],
+                'local_price_currency' => $item['local_price']['currency'],
+                'logo_url' => $item['logo_url'],
+                'brand_color' => $item['brand_color'],
+                'coinbase_managed_merchant' => $item['coinbase_managed_merchant'],
+                'brand_logo_url' => $item['brand_logo_url'],
+                'organization_name' => $item['organization_name'],
+                'pricing_type' => $item['pricing_type'],
+                'resource' => $item['resource'],
+            ];
+
+            if(!array_key_exists($item['id'], $MyAllProducts)){
+                Product::create($data);
+            }else{
+                if(!array_diff_assoc($this->filterArraywithArray($item), $this->filterArraywithArray($this->filterProductFromDB($MyAllProducts[$item['id']]))) == []){
+                    $myProductItem = Product::where('product_id', $item['id']);
+                    $myProductItem->update($data);
+                }
             }
         }
     }
 
-    public function getMyProduct($id) //Need to be test first before use in production
+    public function getMyProduct($id)
     {
         return $this->getAllMyProducts()[$id];
     }
@@ -164,6 +188,58 @@ class Cart extends Component
         return $products;
     }
 
+    public function filterProductFromDB($collection)
+    {
+        $data = [];
+        $item = $collection->toArray();
+
+        $data = [
+            'id' => $item['product_id'],
+            'name' => $item['name'],
+            'description' => $item['description'],
+            'local_price' => [
+                'amount' => $item['local_price_amount'],
+                'currency' => $item['local_price_currency'],
+            ],
+            'logo_url' => $item['logo_url'],
+            'brand_color' => $item['brand_color'],
+            'coinbase_managed_merchant' => $item['coinbase_managed_merchant'],
+            'brand_logo_url' => $item['brand_logo_url'],
+            'organization_name' => $item['organization_name'],
+            'pricing_type' => $item['pricing_type'],
+            'requested_info' => [
+                0 => 'name'
+            ],
+            'resource' => $item['resource'],
+        ];
+
+        return $data;
+    }
+
+    public function filterArraywithArray($arrayData)
+    {
+        $data = [
+            'id' => $arrayData['id'],
+            'name' => $arrayData['name'],
+            'description' => $arrayData['description'],
+            'local_price_amount' => $arrayData['local_price']['amount'],
+            'local_price_currency' => $arrayData['local_price']['currency'],
+            'logo_url' => $arrayData['logo_url'],
+            'brand_color' => $arrayData['brand_color'],
+            'brand_logo_url' => $arrayData['brand_logo_url'],
+            'organization_name' => $arrayData['organization_name'],
+            'pricing_type' => $arrayData['pricing_type'],
+            'resource' => $arrayData['resource'],
+        ];
+
+        return $data;
+    }
+
+    public function updateTotal()
+    {
+        return User::where('id', auth()->id())->update(['cart_total' => $this->getTotal()]);
+    }
+
     public function getTotal()
     {
         $total = 0;
@@ -177,6 +253,11 @@ class Cart extends Component
         }
 
         return $total;
+    }
+
+    public function mount()
+    {
+        $this->initializeProducts();
     }
 
     public function render()

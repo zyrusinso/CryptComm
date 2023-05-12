@@ -69,9 +69,9 @@
 
             <!-- Email -->
             <div class="mb-3">
-                <x-jet-label for="username" value="{{ __('app.username') }}" />
-                <x-jet-input id="username" type="username" class="{{ $errors->has('username') ? 'is-invalid' : '' }}" wire:model.defer="state.username" />
-                <x-jet-input-error for="username" />
+                <x-jet-label for="email" value="{{ __('app.email') }}" />
+                <x-jet-input id="email" type="email" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" wire:model.defer="state.email" />
+                <x-jet-input-error for="email" />
             </div>
         </div>
     </x-slot>

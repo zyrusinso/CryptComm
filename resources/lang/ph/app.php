@@ -17,6 +17,7 @@ return [
     '_profile' => 'Profile',
     'name' => 'Pangalan',
     'username' => 'Username',
+    'email' => 'Email',
 
     // Application
     'header' => [

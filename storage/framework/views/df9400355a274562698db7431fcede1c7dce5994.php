@@ -141,7 +141,7 @@
                 // window.open(url, '_blank');
 
                 setTimeout(() => {
-                    window.location = "<?php route('history.index') ?>"
+                    window.location = "<?php route('order-history.index') ?>"
                 }, 10000);
             })
         </script>

@@ -98,7 +98,7 @@
                             
 
                             <li class="dropdown">
-                                <a class="nav-link menu-title link-nav <?php echo e(routeActive('history.index')); ?>" href="<?php echo e(route('history.index')); ?>"><i data-feather="clock"></i><span><?php echo app('translator')->get('app.sidebar.history'); ?></span></a>
+                                <a class="nav-link menu-title link-nav <?php echo e(routeActive('order-history.index')); ?>" href="<?php echo e(route('order-history.index')); ?>"><i data-feather="clock"></i><span><?php echo app('translator')->get('app.sidebar.history'); ?></span></a>
                             </li>
 
                             <li class="sidebar-main-title">

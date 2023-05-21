@@ -19,4 +19,10 @@
 
 <script src="<?php echo e(asset('assets/js/notify/bootstrap-notify.min.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/js/icons/icons-notify.js')); ?>"></script>
-<script src="<?php echo e(asset('assets/js/icons/flag-icon-clipart.js')); ?>"></script><?php /**PATH G:\xampp\htdocs\Laravel\Cryptcomm\resources\views/layouts/partials/js.blade.php ENDPATH**/ ?>
+<script src="<?php echo e(asset('assets/js/icons/flag-icon-clipart.js')); ?>"></script>
+
+<script>
+    if(localStorage.getItem('body') == 'dark-only'){
+        $("body").attr("class", "dark-only");
+    }
+</script><?php /**PATH G:\xampp\htdocs\Laravel\Cryptcomm\resources\views/layouts/partials/js.blade.php ENDPATH**/ ?>

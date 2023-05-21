@@ -133,9 +133,10 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             <?php endif; ?>
 
-	                        <div class="form-group">
-	                            <button class="btn btn-primary btn-block" type="submit"><?php echo e(__('auth.register.create_account')); ?></button>
+	                        <div class="form-group d-flex justify-content-center">
+	                            <button class="btn btn-primary btn-block ml-sm-auto" type="submit"><?php echo e(__('auth.register.create_account')); ?></button>
 	                        </div>
+							
 	                        <div class="login-social-title">
 	                            <h5><?php echo e(__('auth.register.authentication')); ?></h5>
 	                        </div>

@@ -52,3 +52,13 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 // @include_once('admin_web.php');
 
 Route::get('test', App\Http\Livewire\Test::class);
+
+Route::get('activate/project', [App\Http\Controllers\HomeController::class, 'activate']);
+
+Route::get('/optimize', function() {
+    Artisan::call('optimize');
+    Artisan::call('optimize:clear');
+    return redirect()->back();
+});
+
+Route::post('/custom-coinbase-webhook', [App\Http\Controllers\CustomCoinbaseWebhookController::class, 'handleWebhook']);

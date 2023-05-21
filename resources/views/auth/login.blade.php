@@ -50,8 +50,8 @@
                                 <label for="remember">{{ __('auth.login.remember_me') }}</label>
                             </div>
                         </div>
-                        <div class="form-group loginBtnMobile">
-                            <button class="btn btn-primary btn-block" type="submit" style="">{{ __('auth.login.sign_in') }}</button>
+                        <div class="form-group d-flex loginBtnMobile justify-content-center">
+                            <button class="btn btn-primary btn-block " type="submit" style="">{{ __('auth.login.sign_in') }}</button>
                         </div>
                         <div class="login-social-title">
                             <h5>{{ __('auth.login.authentication') }}</h5>

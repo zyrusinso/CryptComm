@@ -24,7 +24,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Prdouct Name</th>
+                                            <th>Product Name</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th>Action</th>
@@ -61,8 +61,8 @@
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
                                             <td class="text-end" colspan="10">
-                                                <a class="btn btn-secondary cart-btn-transform" href="<?php echo e(route('product.index')); ?>">continue shopping</a>
-                                                <a class="btn btn-primary cart-btn-transform" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#checkout">check out</a>
+                                                <a class="btn btn-secondary cart-btn-transform" href="<?php echo e(route('product.index')); ?>">Continue Shopping</a>
+                                                <a class="btn btn-primary cart-btn-transform" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#checkout">Check Out</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -104,7 +104,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-danger cart-btn-transform" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                                                <button class="btn btn-primary cart-btn-transform" href="javascript:void(0)" wire:click="checkoutItem" wire:loading.attr="disabled" onclick="//$('.loader-wrapper').show();">check out</button>
+                                                <button class="btn btn-primary cart-btn-transform" href="javascript:void(0)" wire:click="checkoutItem" wire:loading.attr="disabled" onclick="$('.loader-wrapper').show();">check out</button>
                                             </div>
                                         </div>
                                     </div>
@@ -117,7 +117,7 @@
         </div>
     </div>
 
-    <form id="redirectToPayment" target="_blank"></form>
+    <a id="redirectToPayment"></a>
     <a id="checkoutPage"></a>
 
     <?php $__env->startPush('scripts'); ?>
@@ -136,13 +136,14 @@
                 checkoutPage.setAttribute('href', url);
                 checkoutPage.setAttribute('target', '_blank');
                 checkoutPage.click();
-                // redirectForm.setAttribute('action', url);
-                // redirectForm.submit();
-                // window.open(url, '_blank');
+
+                
 
                 setTimeout(() => {
-                    window.location = "<?php route('order-history.index') ?>"
-                }, 10000);
+                    window.location = "<?php echo e(route('order-history.index')); ?>"
+                    redirectForm.setAttribute('href', "<?php echo e(route('order-history.index')); ?>");
+                    redirectForm.submit();
+                }, 5000);
             })
         </script>
     <?php $__env->stopPush(); ?>

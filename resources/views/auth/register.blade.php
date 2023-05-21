@@ -84,9 +84,10 @@
                                 </div>
                             @endif
 
-	                        <div class="form-group">
-	                            <button class="btn btn-primary btn-block" type="submit">{{ __('auth.register.create_account') }}</button>
+	                        <div class="form-group d-flex justify-content-center">
+	                            <button class="btn btn-primary btn-block ml-sm-auto" type="submit">{{ __('auth.register.create_account') }}</button>
 	                        </div>
+							
 	                        <div class="login-social-title">
 	                            <h5>{{ __('auth.register.authentication') }}</h5>
 	                        </div>

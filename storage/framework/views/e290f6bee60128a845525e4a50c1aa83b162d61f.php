@@ -28,15 +28,15 @@
 	<?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('ecommerce.product')->html();
-} elseif ($_instance->childHasBeenRendered('HYnejyo')) {
-    $componentId = $_instance->getRenderedChildComponentId('HYnejyo');
-    $componentTag = $_instance->getRenderedChildComponentTagName('HYnejyo');
+} elseif ($_instance->childHasBeenRendered('IMEEyls')) {
+    $componentId = $_instance->getRenderedChildComponentId('IMEEyls');
+    $componentTag = $_instance->getRenderedChildComponentTagName('IMEEyls');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('HYnejyo');
+    $_instance->preserveRenderedChild('IMEEyls');
 } else {
     $response = \Livewire\Livewire::mount('ecommerce.product');
     $html = $response->html();
-    $_instance->logRenderedChild('HYnejyo', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('IMEEyls', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

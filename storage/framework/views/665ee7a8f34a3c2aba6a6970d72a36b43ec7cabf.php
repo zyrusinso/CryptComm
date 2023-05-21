@@ -77,8 +77,8 @@ unset($__errorArgs, $__bag); ?>
                                 <label for="remember"><?php echo e(__('auth.login.remember_me')); ?></label>
                             </div>
                         </div>
-                        <div class="form-group loginBtnMobile">
-                            <button class="btn btn-primary btn-block" type="submit" style=""><?php echo e(__('auth.login.sign_in')); ?></button>
+                        <div class="form-group d-flex loginBtnMobile justify-content-center">
+                            <button class="btn btn-primary btn-block " type="submit" style=""><?php echo e(__('auth.login.sign_in')); ?></button>
                         </div>
                         <div class="login-social-title">
                             <h5><?php echo e(__('auth.login.authentication')); ?></h5>

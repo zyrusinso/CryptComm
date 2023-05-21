@@ -36,8 +36,35 @@
 	                    </div>
 	                </div>
 	            </div>
-	            <div class="col-xl-5 box-col-6 proorder-xl-3 xl-100">
+	            <div class="col-xl-2 col-md-6 box-col-6 xl-50 proorder-lg-1">
 	                <div class="card">
+	                    <div class="card-body">
+	                        <div class="collection-filter-block">
+	                            <ul class="pro-services">
+	                                <li>
+	                                    <div class="media">
+	                                        <i data-feather="truck"></i>
+	                                        <div class="media-body">
+	                                            <h5>@lang('app.ecommerce.free_shipping')</h5>
+	                                            <p>@lang('app.ecommerce.free_shipping_worldwide')</p>
+	                                        </div>
+	                                    </div>
+	                                </li>
+	                                <li>
+	                                    <div class="media">
+	                                        <i data-feather="clock"></i>
+	                                        <div class="media-body">
+	                                            <h5>@lang('app.ecommerce.24_7_service')</h5>
+	                                            <p>@lang('app.ecommerce.online_service')</p>
+	                                        </div>
+	                                    </div>
+	                                </li>
+	                            </ul>
+	                        </div>
+	                    </div>
+	                    <!-- silde-bar colleps block end here-->
+	                </div>
+					<div class="card">
 	                    <div class="card-body">
 	                        <div class="pro-group pt-0 border-0">
 	                            <div class="product-page-details mt-0">
@@ -135,35 +162,6 @@
                                 <input type="hidden" name="productId" value="{{ $product['id'] }}">
                             </form>
 	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-xl-2 col-md-6 box-col-6 xl-50 proorder-lg-1">
-	                <div class="card">
-	                    <div class="card-body">
-	                        <div class="collection-filter-block">
-	                            <ul class="pro-services">
-	                                <li>
-	                                    <div class="media">
-	                                        <i data-feather="truck"></i>
-	                                        <div class="media-body">
-	                                            <h5>@lang('app.ecommerce.free_shipping')</h5>
-	                                            <p>@lang('app.ecommerce.free_shipping_worldwide')</p>
-	                                        </div>
-	                                    </div>
-	                                </li>
-	                                <li>
-	                                    <div class="media">
-	                                        <i data-feather="clock"></i>
-	                                        <div class="media-body">
-	                                            <h5>@lang('app.ecommerce.24_7_service')</h5>
-	                                            <p>@lang('app.ecommerce.online_service')</p>
-	                                        </div>
-	                                    </div>
-	                                </li>
-	                            </ul>
-	                        </div>
-	                    </div>
-	                    <!-- silde-bar colleps block end here-->
 	                </div>
 	            </div>
 	        </div>

@@ -308,5 +308,9 @@ $(".mode").on("click", function () {
         // $('.mode-sun').toggleClass("show")
         $('body').toggleClass("dark-only");
         var color = $(this).attr("data-attr");
-        localStorage.setItem('body', 'dark-only');
+        if($('body').hasClass('dark-only')){
+            localStorage.setItem('body', 'dark-only');
+        }else{
+            localStorage.removeItem('body');
+        }
     });

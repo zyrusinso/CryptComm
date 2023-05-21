@@ -20,3 +20,9 @@
 <script src="{{ asset('assets/js/notify/bootstrap-notify.min.js') }}"></script>
 <script src="{{ asset('assets/js/icons/icons-notify.js') }}"></script>
 <script src="{{ asset('assets/js/icons/flag-icon-clipart.js') }}"></script>
+
+<script>
+    if(localStorage.getItem('body') == 'dark-only'){
+        $("body").attr("class", "dark-only");
+    }
+</script>

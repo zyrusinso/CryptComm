@@ -5,10 +5,12 @@ namespace App\Http\Livewire\Ecommerce;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use App\Models\Ecommerce\Order;
 use App\Models\Ecommerce\Product;
+use App\Models\Ecommerce\Checkout;
+use Illuminate\Support\Facades\DB;
 use Shakurov\Coinbase\Facades\Coinbase;
 use App\Models\Ecommerce\Cart as CartModel;
-use App\Models\Ecommerce\Checkout;
 
 class Cart extends Component
 {
@@ -16,37 +18,61 @@ class Cart extends Component
 
     public function checkoutItem()
     {
-        $metadata = [];
-        $total = User::where('id', auth()->id())->first()->cart_total;
-        $carts = $this->getCarts();
-        $products = $this->getAllProducts();
+        DB::transaction(function () {
 
-        foreach($carts as $item){
-            $metadata = array_merge($metadata, [Str::snake($products[$item['product_id']]['name']) => $item['quantity']]);
-        }
+            $metadata = [];
+            $total = User::where('id', auth()->id())->first()->cart_total;
+            $carts = $this->getCarts();
+            $products = $this->getAllProducts();
 
-        $charge = Coinbase::createCharge([
-            'name' => auth()->user()->username,
-            'description' => (auth()->user()->is_admin == 1)? 'Admin Account' : 'User Account',
-            'local_price' => [
-                'amount' => $total,
-                'currency' => 'USD',
-            ],
-            'pricing_type' => 'fixed_price',
-            'metadata' => $metadata
-        ])['data'];
+            foreach($carts as $item){
+                $metadata = array_merge($metadata, [Str::snake($products[$item['product_id']]['name']) => $item['quantity']]);
+            }
 
-        dd($charge);
+            // dd($metadata);
+            $charge = Coinbase::createCharge([
+                'name' => auth()->user()->name,
+                'description' => (auth()->user()->is_admin == 1)? 'Admin Account' : 'User Account',
+                'local_price' => [
+                    'amount' => $total,
+                    'currency' => 'USD',
+                ],
+                'pricing_type' => 'fixed_price',
+                'metadata' => $metadata
+            ])['data'];
+    
+            // dd($charge);
 
-        Checkout::create([
-            'user_id' => auth()->id(),
-            'product_id' => $charge['id'],
-            'transaction_id' => '',
-            'total_price' => '',
-            'no_of_item' => count($carts)
-        ]);
+            $checkout = Checkout::create([
+                'user_id' => auth()->id(),
+                'product_id' => $charge['id'],
+                'transaction_id' => $charge['code'],
+                'total_price' => $total,
+                'no_of_item' => count($carts)
+            ]);
+    
+            foreach($carts as $item){
+                $orderData = [
+                    'transaction_id' => $charge['code'],
+                    'product_id' => $item['product_id'],
+                    'user_id' => auth()->id(),
+                    'checkout_id' => $checkout->id,
+                    'name' => auth()->user()->name,
+                    'amount' => $products[$item['product_id']]['local_price']['amount'],
+                    'quantity' => $item['quantity'],
+                    'status' => 'Pending'
+                ];
+        
+                Order::create($orderData);
+            }
+    
+            $cartTodelete = CartModel::where('user_id', auth()->id())->get();
+            foreach($cartTodelete as $item){
+                $item->delete();
+            }
+            $this->emit('checkoutUrl', $charge['hosted_url']);
+        });
 
-        $this->emit('checkoutUrl', $charge['hosted_url']);
 
         // sleep(5);
         // return redirect(route('history.index'))->with(['message' => 'Redirecting to history page...']);
@@ -55,10 +81,11 @@ class Cart extends Component
 
     public function eventCheckout()
     {
-        return ;
+        return;
         $events = Coinbase::getEvents()['data'];
 
-        dd($events);
+        $charges = Coinbase::getCharges();
+        // dd($events);
 
         foreach($events as $item){
             if($item['id'] == $this->checkout && $item['type'] == 'charge:confirmed'){
@@ -105,7 +132,7 @@ class Cart extends Component
     {
         $myCarts = [];
 
-        $carts = CartModel::all();
+        $carts = CartModel::where('user_id', auth()->id())->get();
         foreach($carts as $item){
             $myCarts += [$item->id => $item];
         }

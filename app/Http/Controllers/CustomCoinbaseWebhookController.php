@@ -9,9 +9,9 @@ class CustomCoinbaseWebhookController extends CoinbaseWebhookController
 {
     public function handleWebhook(Request $request)
     {
-        dd($request->all());
         info($request->all());
-
+        dd($request->all());
+        
         return parent::handleWebhook($request);
     }
 }
